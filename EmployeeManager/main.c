@@ -20,9 +20,9 @@ typedef struct
 Employee **createList(char fileName, int *size)
 {
     //read the file
-    File *list = fopen(fileName, "r");
+    FILE *list = fopen(fileName, "r");
     //get the size of the text file ie.number of lines and store it in size
-    fscanf(list, %d, size);
+    fscanf(list, "%d", size);
 
     //creates an object of type employee and allocates memory for every employee in the list from the textfile
     Employee **employeeList = calloc(*size, sizeof(Employee*));
@@ -33,7 +33,7 @@ Employee **createList(char fileName, int *size)
         employeeList[i] = (Employee*)malloc(sizeof(Employee));
 
         //from file instantiate fixed values for the employee
-        fscanf(list, %d %s %s, &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName));
+        fscanf(list, "%d %s %s", &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName);
         employeeList[i]->wage = 0;
         employeeList[i]->hoursWorked = 0;
         employeeList[i]->pay = 0;
@@ -68,18 +68,30 @@ int find(int idNo, Employee** list, int size)
 void payStatus(char *fileName, Employee** list, int size)
 {
     //open textfile to read from it
-    File* paystub = fopen(fileName, "r");
+    FILE* paystub = fopen(fileName, "r");
+
+    //variable to store the id
+    int id, rate, hours;
 
     //format:
     //ID - wage - hoursWorked
     for(int i = 0; i < size; i++)
     {
-        //variable to store the id
-        int id;
         //read a line from the text and calls the find function to locate the employee in the list with their id
         //and assign the correct wage and hours
-        fscanf = (paystub, %d %f %f, &id, &(list[find(id,list,size)]->wage), &(list[find(id,list,size)]->hoursWorked));
+        fscanf(paystub , "%d %f %f", &id, &rate, &hours);
+        int index = find(id,list,size);
+        if(index == -1)
+        {
+            continue;
+        }
+        else
+        {
+            list[index]->wage = rate;
+            list[index]->hoursWorked = hours;
+        }
     }//end loop
+    fclose(paystub);
 }//end function
 
 //compute the pay for each employee in the list
@@ -102,11 +114,28 @@ float amountPaid(Employee **list, int size)
     }
 }
 
+//function to print the whole list
 void printList(Employee** list, int size)
 {
+    //loop through list
     for(int i = 0; i < size; i++)
     {
-        printf("%d %s %s %f", list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
+        printf("%d - %s %s : %f", list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
+    }
+}
+
+//function to remove an employee from the list
+void withdraw(Employee **list, int size, int id)
+{
+    //get index of employee
+    int employee = find(id, list, size);
+    //deallocate the memory
+    free(list[employee]);
+
+    //shift all employees from list up after the removed employee
+    for (int i = employee; i < size-1; i++)
+    {
+        list[i+1] = list[i];
     }
 }
 
