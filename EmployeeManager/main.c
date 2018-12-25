@@ -125,17 +125,22 @@ void printList(Employee** list, int size)
 }
 
 //function to remove an employee from the list
-void withdraw(Employee **list, int size, int id)
+void withdraw(Employee **list, int *size, int id)
 {
     //get index of employee
-    int employee = find(id, list, size);
-    //deallocate the memory
-    free(list[employee]);
+    int employee = find(id, list, *size);
 
-    //shift all employees from list up after the removed employee
-    for (int i = employee; i < size-1; i++)
+    if(employee != -1)
     {
-        list[i+1] = list[i];
+        //deallocate the memory
+        free(list[employee]);
+
+        //shift all employees from list up after the removed employee
+        for (int i = employee; i < (*size)-1; i++)
+        {
+            list[i+1] = list[i];
+        }
+        *size--; //reduce the size of the list
     }
 }
 
