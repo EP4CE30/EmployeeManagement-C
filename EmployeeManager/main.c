@@ -98,7 +98,7 @@ float amountPaid(Employee **list, int size)
 {
     for(int i = 0; i < size; i++)
     {
-        printf(%d ":" %f, list[i]->employeeID, list[i]->pay);
+        printf("%d : %f", list[i]->employeeID, list[i]->pay);
     }
 }
 
@@ -106,7 +106,7 @@ void printList(Employee** list, int size)
 {
     for(int i = 0; i < size; i++)
     {
-        printf(%d %s %s %f, list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
+        printf("%d %s %s %f", list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
     }
 }
 
