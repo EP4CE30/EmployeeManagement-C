@@ -33,7 +33,7 @@ Employee **createList(char fileName, int *size)
         employeeList[i] = (Employee*)malloc(sizeof(Employee));
 
         //from file instantiate fixed values for the employee
-        fscanf(list, %d %s %s %d, &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName));
+        fscanf(list, %d %s %s, &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName));
         employeeList[i]->wage = 0;
         employeeList[i]->hoursWorked = 0;
         employeeList[i]->pay = 0;
@@ -78,7 +78,7 @@ void payStatus(char *fileName, Employee** list, int size)
         int id;
         //read a line from the text and calls the find function to locate the employee in the list with their id
         //and assign the correct wage and hours
-        fscanf = (paystub, %d %d %d, &id, &(list[find(id,list,size)]->wage), &(list[find(id,list,size)]->hoursWorked));
+        fscanf = (paystub, %d %f %f, &id, &(list[find(id,list,size)]->wage), &(list[find(id,list,size)]->hoursWorked));
     }//end loop
 }//end function
 
@@ -92,6 +92,23 @@ void computePay(Employee** list,int size)
         list[i]->pay = (list[i]->hoursWorked)*(list[i]->wage);
     }//end loop
 }//end function
+
+//outputs the list of payments for each employee
+float amountPaid(Employee **list, int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        printf(%d ":" %f, list[i]->employeeID, list[i]->pay);
+    }
+}
+
+void printList(Employee** list, int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        printf(%d %s %s %f, list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
+    }
+}
 
 int main()
 {
