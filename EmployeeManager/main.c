@@ -34,6 +34,7 @@ Employee **createList(char fileName, int *size)
 
         //from file instantiate fixed values for the employee
         fscanf(list, %d %s %s %d, &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName));
+        employeeList[i]->wage = 0;
         employeeList[i]->hoursWorked = 0;
         employeeList[i]->pay = 0;
     }
@@ -43,6 +44,53 @@ Employee **createList(char fileName, int *size)
 
     //return the memory location of the employee list
     return employeeList;
+}//end function
+
+//find the id of an employee in the list and return their index position
+int find(int idNo, Employee** list, int size)
+{
+    //loop through list
+    for(int i = 0; i < size; i++)
+    {
+        if(list[i] == idNo)
+        {
+            return i;
+        }
+        else
+        {
+            printf("ID not found.");
+            return -1;
+        }
+    }
+}//end of function
+
+//upload paystub information from textfile
+void payStatus(char *fileName, Employee** list, int size)
+{
+    //open textfile to read from it
+    File* paystub = fopen(fileName, "r");
+
+    //format:
+    //ID - wage - hoursWorked
+    for(int i = 0; i < size; i++)
+    {
+        //variable to store the id
+        int id;
+        //read a line from the text and calls the find function to locate the employee in the list with their id
+        //and assign the correct wage and hours
+        fscanf = (paystub, %d %d %d, &id, &(list[find(id,list,size)]->wage), &(list[find(id,list,size)]->hoursWorked));
+    }//end loop
+}//end function
+
+//compute the pay for each employee in the list
+void computePay(Employee** list,int size)
+{
+    //loop through list
+    for(int i = 0; i < size; i++)
+    {
+        //Calculate the employees pay
+        list[i]->pay = (list[i]->hoursWorked)*(list[i]->wage);
+    }//end loop
 }//end function
 
 int main()
