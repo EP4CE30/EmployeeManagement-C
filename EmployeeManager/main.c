@@ -17,7 +17,7 @@ typedef struct
 }Employee;
 
 //this function will generate a list of employees from a textfile and return a pointer to it
-Employee **createList(char fileName, int *size)
+Employee **createList(char* fileName, int *size)
 {
     //read the file
     FILE *list = fopen(fileName, "r");
@@ -34,9 +34,9 @@ Employee **createList(char fileName, int *size)
 
         //from file instantiate fixed values for the employee
         fscanf(list, "%d %s %s", &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName);
-        employeeList[i]->wage = 0;
-        employeeList[i]->hoursWorked = 0;
-        employeeList[i]->pay = 0;
+        employeeList[i]->wage = 0.0;
+        employeeList[i]->hoursWorked = 0.0;
+        employeeList[i]->pay = 0.0;
     }
 
     //close file
@@ -49,19 +49,21 @@ Employee **createList(char fileName, int *size)
 //find the id of an employee in the list and return their index position
 int find(int idNo, Employee** list, int size)
 {
+    int index;
     //loop through list
     for(int i = 0; i < size; i++)
     {
-        if(list[i] == idNo)
+        if(list[i]->employeeID == idNo)
         {
-            return i;
+            index = i;
         }
         else
         {
             printf("ID not found.");
-            return -1;
+            index = -1;
         }
     }
+    return index;
 }//end of function
 
 //upload paystub information from textfile
@@ -71,7 +73,8 @@ void payStatus(char *fileName, Employee** list, int size)
     FILE* paystub = fopen(fileName, "r");
 
     //variable to store the id
-    int id, rate, hours;
+    int id;
+    float rate, hours;
 
     //format:
     //ID - wage - hoursWorked
@@ -106,7 +109,7 @@ void computePay(Employee** list,int size)
 }//end function
 
 //outputs the list of payments for each employee
-float amountPaid(Employee **list, int size)
+void amountPaid(Employee **list, int size)
 {
     for(int i = 0; i < size; i++)
     {
@@ -147,5 +150,11 @@ void withdraw(Employee **list, int *size, int id)
 int main()
 {
     //workspace
+    char *fileName = "employees.txt";
+    int fileSize = 0;
+    int *fileSizePtr = &fileSize;
+
+    Employee **list = createList(fileName, fileSizePtr);
+    printList(list, *fileSizePtr);
     return 0;
 }

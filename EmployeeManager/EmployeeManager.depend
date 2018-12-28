@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1545967690 source:c:\users\uzair\desktop\work\c practice\employeemanagement-c\employeemanager\main.c
+	<stdio.h>
+	<stdlib.h>
+
