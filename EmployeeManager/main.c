@@ -168,5 +168,10 @@ int main(void)
     //testing printList
     printList(list, fileSize);
 
+    //testing payment methods
+    payStatus("payments.txt", list, fileSize);
+    computePay(list, fileSize);
+    amountPaid(list, fileSize);
+
     return 0;
 }
