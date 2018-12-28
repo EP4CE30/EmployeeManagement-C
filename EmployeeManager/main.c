@@ -57,6 +57,7 @@ int find(int idNo, Employee** list, int size)
         if(list[i]->employeeID == idNo)
         {
             index = i;
+            break;
         }
         else
         {
@@ -157,7 +158,8 @@ int main(void)
     int fileSize;
 
     Employee **list = createList(fileName, &fileSize);
-    printf("Index of Newton Gauss: %d\n\n", find(3594, list, fileSize));
+    printf("Index of Newton Gauss: %d\n", find(3594, list, fileSize));
     printList(list, fileSize);
+    printf("%d\n",fileSize);
     return 0;
 }
