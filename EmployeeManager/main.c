@@ -157,9 +157,16 @@ int main(void)
     char *fileName = "employees.txt";
     int fileSize;
 
+    //create the list
     Employee **list = createList(fileName, &fileSize);
-    printf("Index of Newton Gauss: %d\n", find(3594, list, fileSize));
+
+    //testing find method valid input
+    printf("Index of Bruce Wayne: %d\n", find(8972, list, fileSize));
+    //testing find method invalid input
+    printf("Index of non-existent employee: %d\n", find(7238, list, fileSize));
+
+    //testing printList
     printList(list, fileSize);
-    printf("%d\n",fileSize);
+
     return 0;
 }
