@@ -22,7 +22,8 @@ Employee **createList(char* fileName, int *size)
     //read the file
     FILE *list = fopen(fileName, "r");
     //get the size of the text file ie.number of lines and store it in size
-    fscanf(list, "%d", size);
+    fscanf(list,"%d", size);
+    printf("%d\n", *size);
 
     //creates an object of type employee and allocates memory for every employee in the list from the textfile
     Employee **employeeList = calloc(*size, sizeof(Employee*));
@@ -33,7 +34,7 @@ Employee **createList(char* fileName, int *size)
         employeeList[i] = (Employee*)malloc(sizeof(Employee));
 
         //from file instantiate fixed values for the employee
-        fscanf(list, "%d %s %s", &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName);
+        fscanf(list,"%d %s %s", &(employeeList[i]->employeeID), employeeList[i]->firstName, employeeList[i]->lastName);
         employeeList[i]->wage = 0.0;
         employeeList[i]->hoursWorked = 0.0;
         employeeList[i]->pay = 0.0;
@@ -59,10 +60,11 @@ int find(int idNo, Employee** list, int size)
         }
         else
         {
-            printf("ID not found.");
             index = -1;
         }
     }
+    if (index == -1)
+        printf("ID not found.\n");
     return index;
 }//end of function
 
@@ -82,7 +84,7 @@ void payStatus(char *fileName, Employee** list, int size)
     {
         //read a line from the text and calls the find function to locate the employee in the list with their id
         //and assign the correct wage and hours
-        fscanf(paystub , "%d %f %f", &id, &rate, &hours);
+        fscanf(paystub , "%d %f %f\n", &id, &rate, &hours);
         int index = find(id,list,size);
         if(index == -1)
         {
@@ -113,7 +115,7 @@ void amountPaid(Employee **list, int size)
 {
     for(int i = 0; i < size; i++)
     {
-        printf("%d : %f", list[i]->employeeID, list[i]->pay);
+        printf("%d : %f\n", list[i]->employeeID, list[i]->pay);
     }
 }
 
@@ -123,8 +125,9 @@ void printList(Employee** list, int size)
     //loop through list
     for(int i = 0; i < size; i++)
     {
-        printf("%d - %s %s : %f", list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
+        printf("%d - %s %s : %f\n", list[i]->employeeID, list[i]->firstName, list[i]->lastName, list[i]->pay);
     }
+    printf("\n");
 }
 
 //function to remove an employee from the list
@@ -147,14 +150,14 @@ void withdraw(Employee **list, int *size, int id)
     }
 }
 
-int main()
+int main(void)
 {
     //workspace
     char *fileName = "employees.txt";
-    int fileSize = 0;
-    int *fileSizePtr = &fileSize;
+    int fileSize;
 
-    Employee **list = createList(fileName, fileSizePtr);
-    printList(list, *fileSizePtr);
+    Employee **list = createList(fileName, &fileSize);
+    printf("Index of Newton Gauss: %d\n\n", find(3594, list, fileSize));
+    printList(list, fileSize);
     return 0;
 }
