@@ -166,7 +166,7 @@ void withdraw(Employee **list, int *size, int id)
 
 int main(void)
 {
-    //workspace
+    //init variables for files and list size
     char *fileName = "employees.txt";
     int fileSize;
 
