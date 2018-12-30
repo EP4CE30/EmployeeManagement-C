@@ -145,9 +145,22 @@ void withdraw(Employee **list, int *size, int id)
         //shift all employees from list up after the removed employee
         for (int i = employee; i < (*size)-1; i++)
         {
-            list[i+1] = list[i];
+            list[i] = list[i+1];
+            list[i]->employeeID = list[i+1]->employeeID;
+            list[i]->hoursWorked = list[i+1]->hoursWorked;
+            list[i]->pay = list[i+1]->pay;
+            list[i]->wage = list[i+1]->wage;
+
+            //copy each character from the first and last names
+            for(int j = 0; j < 16; j++)
+            {
+                (list[i]->firstName)[j] = (list[i+1]->firstName)[j];
+                (list[i]->lastName)[j] = (list[i+1]->lastName)[j];
+            }
+
         }
-        *size--; //reduce the size of the list
+        free(list[*size]); //deallocate the extra copy of the last element
+        (*size)--; //reduce the size of the list
     }
 }
 
@@ -172,6 +185,10 @@ int main(void)
     payStatus("payments.txt", list, fileSize);
     computePay(list, fileSize);
     amountPaid(list, fileSize);
+
+    //testing withdraw method, getting rid of John Smith
+    withdraw(list, &fileSize, 1324);
+    printList(list, fileSize);
 
     return 0;
 }
